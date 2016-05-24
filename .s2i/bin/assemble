@@ -6,6 +6,8 @@
 # For more information refer to the documentation:
 #	https://github.com/openshift/source-to-image/blob/master/docs/builder_image.md
 #
+DEPLOY_DIR="/opt/eap/standalone/deployments"
+WAR_FILE_URL="https://raw.githubusercontent.com/VeerMuchandi/ps/master/deployments/ROOT.war"
 
 if [[ "$1" == "-h" ]]; then
 	# If the 'karsuncloud/eofferapp' assemble script is executed with '-h' flag,
@@ -20,8 +22,5 @@ if [ "$(ls /tmp/artifacts/ 2>/dev/null)" ]; then
   mv /tmp/artifacts/. ./
 fi
 
-echo "---> Installing application source..."
-cp -Rf /tmp/src/. ./
-
-echo "---> Building application from source..."
-# TODO: Add build steps for your application, eg npm install, bundle install
+echo "---> Copying WAR file over..."
+curl -o ${DEPLOY_DIR}/ROOT.war -O ${WAR_FILE_URL}
